@@ -79,3 +79,21 @@
 (= (#(filter (complement sequential?) (rest (tree-seq sequential? seq %))) '((1 2) 3 [4 [5 6]])) '(1 2 3 4 5 6))
 (= (#(filter (complement sequential?) (rest (tree-seq sequential? seq %))) ["a" ["b"] "c"]) '("a" "b" "c"))
 (= (#(filter (complement sequential?) (rest (tree-seq sequential? seq %))) '((((:a))))) '(:a))
+
+; #29
+; Get the Caps
+; Difficulty: Easy
+; Topics: strings
+
+(= (#(apply str (filter (fn [c] (Character/isUpperCase c)) %)) "HeLlO, WoRlD!") "HLOWRD")
+(empty? (#(apply str (filter (fn [c] (Character/isUpperCase c)) %)) "nothing"))
+(= (#(apply str (filter (fn [c] (Character/isUpperCase c)) %)) "$#A(*&987Zf") "AZ")
+
+; #30
+; Compress a Sequence
+; Difficulty: Easy
+; Topics: seqs
+
+(= (apply str (#(reduce (fn [xs x] (if (= x (last xs)) xs (conj xs x))) [] %) "Leeeeeerrroyyy")) "Leroy")
+(= (#(reduce (fn [xs x] (if (= x (last xs)) xs (conj xs x))) [] %) [1 1 2 3 3 2 2 3]) '(1 2 3 2 3))
+(= (#(reduce (fn [xs x] (if (= x (last xs)) xs (conj xs x))) [] %) [[1 2] [1 2] [3 4] [1 2]]) '([1 2] [3 4] [1 2]))

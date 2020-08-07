@@ -1,4 +1,4 @@
-(ns p-1-10)
+(ns p-01-10)
 
 ; #1
 ; Nothing but the Truth

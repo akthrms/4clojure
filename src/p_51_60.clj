@@ -35,3 +35,16 @@
 (= (longest-increasing-sub-seq [5 6 1 3 2 7]) [5 6])
 (= (longest-increasing-sub-seq [2 3 3 4 5]) [3 4 5])
 (= (longest-increasing-sub-seq [7 6 5 4]) [])
+
+; #54
+; Partition a Sequence
+; Difficulty: Medium
+; Topics: seqs core-functions
+
+(defn partition-seq [n coll]
+  (when (and (seq coll) (<= n (count coll)))
+    (cons (take n coll) (partition-seq n (drop n coll)))))
+
+(= (partition-seq 3 (range 9)) '((0 1 2) (3 4 5) (6 7 8)))
+(= (partition-seq 2 (range 8)) '((0 1) (2 3) (4 5) (6 7)))
+(= (partition-seq 3 (range 8)) '((0 1 2) (3 4 5)))

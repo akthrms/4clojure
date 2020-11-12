@@ -48,3 +48,22 @@
 (= (partition-seq 3 (range 9)) '((0 1 2) (3 4 5) (6 7 8)))
 (= (partition-seq 2 (range 8)) '((0 1) (2 3) (4 5) (6 7)))
 (= (partition-seq 3 (range 8)) '((0 1 2) (3 4 5)))
+
+; #55
+; Count Occurrences
+; Difficulty: Medium
+; Topics: seqs core-functions
+
+(= (#(apply merge-with + (for [x %] {x 1})) [1 1 2 3 2 1 1]) {1 4, 2 2, 3 1})
+(= (#(apply merge-with + (for [x %] {x 1})) [:b :a :b :a :b]) {:a 2, :b 3})
+(= (#(apply merge-with + (for [x %] {x 1})) '([1 2] [1 3] [1 3])) {[1 2] 1, [1 3] 2})
+
+; #56
+; Find Distinct Items
+; Difficulty: Medium
+; Topics: seqs core-functions
+
+(= (#(reduce (fn [xs x] (if ((set xs) x) xs (conj xs x))) [] %) [1 2 1 3 1 2 4]) [1 2 3 4])
+(= (#(reduce (fn [xs x] (if ((set xs) x) xs (conj xs x))) [] %) [:a :a :b :b :c :c]) [:a :b :c])
+(= (#(reduce (fn [xs x] (if ((set xs) x) xs (conj xs x))) [] %) '([2 4] [1 2] [1 3] [1 3])) '([2 4] [1 2] [1 3]))
+(= (#(reduce (fn [xs x] (if ((set xs) x) xs (conj xs x))) [] %) (range 50)) (range 50))

@@ -74,3 +74,13 @@
 ; Topics: recursion
 
 (= '(5 4 3 2 1) ((fn foo [x] (when (> x 0) (conj (foo (dec x)) x))) 5))
+
+; #58
+; Function Composition
+; Difficulty: Medium
+; Topics: higher-order-functions core-functions
+
+(= [3 2 1] (((fn [& fs] (fn [& args] (let [[h & t] (reverse fs)] (reduce #(%2 %1) (apply h args) t)))) rest reverse) [1 2 3 4]))
+(= 5 (((fn [& fs] (fn [& args] (let [[h & t] (reverse fs)] (reduce #(%2 %1) (apply h args) t)))) (partial + 3) second) [1 2 3 4]))
+(= true (((fn [& fs] (fn [& args] (let [[h & t] (reverse fs)] (reduce #(%2 %1) (apply h args) t)))) zero? #(mod % 8) +) 3 5 7 9))
+(= "HELLO" (((fn [& fs] (fn [& args] (let [[h & t] (reverse fs)] (reduce #(%2 %1) (apply h args) t)))) #(.toUpperCase %) #(apply str %) take) 5 "hello world"))

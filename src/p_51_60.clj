@@ -89,3 +89,12 @@
 (= 5 ((compose (partial + 3) second) [1 2 3 4]))
 (= true ((compose zero? #(mod % 8) +) 3 5 7 9))
 (= "HELLO" ((compose #(.toUpperCase %) #(apply str %) take) 5 "hello world"))
+
+; #59
+; Juxtaposition
+; Difficulty: Medium
+; Topics: higher-order-functions core-functions
+
+(= [21 6 1] (((fn [& fs] (fn [& arg] (reduce #(conj %1 (apply %2 arg)) [] fs))) + max min) 2 3 5 1 6 4))
+(= ["HELLO" 5] (((fn [& fs] (fn [& arg] (reduce #(conj %1 (apply %2 arg)) [] fs))) #(.toUpperCase %) count) "hello"))
+(= [2 6 4] (((fn [& fs] (fn [& arg] (reduce #(conj %1 (apply %2 arg)) [] fs))) :a :c :b) {:a 2, :b 4, :c 6, :d 8 :e 10}))

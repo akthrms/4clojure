@@ -67,3 +67,10 @@
 (= (#(reduce (fn [xs x] (if ((set xs) x) xs (conj xs x))) [] %) [:a :a :b :b :c :c]) [:a :b :c])
 (= (#(reduce (fn [xs x] (if ((set xs) x) xs (conj xs x))) [] %) '([2 4] [1 2] [1 3] [1 3])) '([2 4] [1 2] [1 3]))
 (= (#(reduce (fn [xs x] (if ((set xs) x) xs (conj xs x))) [] %) (range 50)) (range 50))
+
+; #57
+; Simple Recursion
+; Difficulty: Elementary
+; Topics: recursion
+
+(= '(5 4 3 2 1) ((fn foo [x] (when (> x 0) (conj (foo (dec x)) x))) 5))

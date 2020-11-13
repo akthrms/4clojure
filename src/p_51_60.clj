@@ -80,7 +80,12 @@
 ; Difficulty: Medium
 ; Topics: higher-order-functions core-functions
 
-(= [3 2 1] (((fn [& fs] (fn [& args] (let [[h & t] (reverse fs)] (reduce #(%2 %1) (apply h args) t)))) rest reverse) [1 2 3 4]))
-(= 5 (((fn [& fs] (fn [& args] (let [[h & t] (reverse fs)] (reduce #(%2 %1) (apply h args) t)))) (partial + 3) second) [1 2 3 4]))
-(= true (((fn [& fs] (fn [& args] (let [[h & t] (reverse fs)] (reduce #(%2 %1) (apply h args) t)))) zero? #(mod % 8) +) 3 5 7 9))
-(= "HELLO" (((fn [& fs] (fn [& args] (let [[h & t] (reverse fs)] (reduce #(%2 %1) (apply h args) t)))) #(.toUpperCase %) #(apply str %) take) 5 "hello world"))
+(defn compose [& fs]
+  (fn [& args]
+    (let [[h & t] (reverse fs)]
+      (reduce #(%2 %1) (apply h args) t))))
+
+(= [3 2 1] ((compose rest reverse) [1 2 3 4]))
+(= 5 ((compose (partial + 3) second) [1 2 3 4]))
+(= true ((compose zero? #(mod % 8) +) 3 5 7 9))
+(= "HELLO" ((compose #(.toUpperCase %) #(apply str %) take) 5 "hello world"))

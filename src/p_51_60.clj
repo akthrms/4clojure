@@ -98,3 +98,22 @@
 (= [21 6 1] (((fn [& fs] (fn [& arg] (reduce #(conj %1 (apply %2 arg)) [] fs))) + max min) 2 3 5 1 6 4))
 (= ["HELLO" 5] (((fn [& fs] (fn [& arg] (reduce #(conj %1 (apply %2 arg)) [] fs))) #(.toUpperCase %) count) "hello"))
 (= [2 6 4] (((fn [& fs] (fn [& arg] (reduce #(conj %1 (apply %2 arg)) [] fs))) :a :c :b) {:a 2, :b 4, :c 6, :d 8 :e 10}))
+
+; #60
+; Sequence Reductions
+; Difficulty: Medium
+; Topics: seqs core-functions
+
+(defn my-reductions
+  ([f coll]
+   (my-reductions f (first coll) (rest coll)))
+  ([f init coll]
+   (cons init (lazy-seq (if (empty? coll)
+                          nil
+                          (my-reductions f
+                                         (apply f (list init (first coll)))
+                                         (rest coll)))))))
+
+(= (take 5 (my-reductions + (range))) [0 1 3 6 10])
+(= (my-reductions conj [1] [2 3 4]) [[1] [1 2] [1 2 3] [1 2 3 4]])
+(= (last (my-reductions * 2 [3 4 5])) (reduce * 2 [3 4 5]) 120)
